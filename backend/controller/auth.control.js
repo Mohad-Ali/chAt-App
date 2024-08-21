@@ -54,29 +54,40 @@ export const signup=async(req,res)=>{
 }
 
 
-export const login=async(req,res)=>{
-  try {
-    const {username,password}=req.body
-    const user=await userModel.findOne({username})
-    const checkPassword=await bcrypt.compare(password,user?.password || '')
 
-    if(!user || !checkPassword){
-        res.status(400).json({error:"incorrect username or password "})
+export const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+      return res.status(400).json({ error: "Username and password are required." });
     }
 
-    generateToken(user._id,res)
+    const user = await userModel.findOne({ username });
+    if(!user){
+      return res.status(400).json({ error: "Incorrect username or password." })
+    }
+    
+    const checkPassword = await bcrypt.compare(password, user.password)
+    if(!checkPassword){
+      return res.status(400).json({ error: "Incorrect username or password." })
+    }
 
-    res.status(201).json({
-        fullName:user.fullName,
-        username:user.username,
-        profilePic:user.profilePic
-    })
-   
+    generateToken(user._id, res);
+
+    res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      username: user.username,
+      profilePic: user.profilePic,
+    });
   } catch (error) {
-    console.log("error in login controller",error.message)
-    res.status(500).json({error:"internal server error"})
+    console.error("Error in login controller:", error.message);
+    res.status(500).json({ error: "Internal server error." });
   }
-}
+};
+
+
 
 export const logout=(req,res)=>{
   try {
