@@ -1,6 +1,6 @@
 import React from 'react';  
 import useConversetion from '../../zustand/useConversetion';
-import { useSocketContext } from '../../context/socketContext';
+import { useSocketContext } from '../../context/SocketContext';
 
 const Conversetion = ({conversetion,lastIndx,emoji}) => {
 
