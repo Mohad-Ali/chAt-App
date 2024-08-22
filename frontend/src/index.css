@@ -27,3 +27,17 @@ body{
 ::-webkit-scrollbar-thumb{
     background: #242424 !important;
 }
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+  }
+  
+  /* Apply the shake animation to the element */
+  .shake {
+    display: inline-block; /* Ensure the element is inline-block or block */
+    animation: shake 0.5s ease-in-out; /* Apply the shake animation */
+  }
