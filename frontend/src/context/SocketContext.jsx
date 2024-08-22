@@ -5,17 +5,17 @@ import io from "socket.io-client"
 const SocketContext =createContext()
 
 export const useSocketContext =()=>{
-    return useContext(SocketContext)
+    return useContext(SocketContext);
 }
 
 export const SocketContextProvider =({children})=>{
-    const [socket, setsocket] = useState(null)
-    const [onlineUsers, setonlineUsers] = useState([])
-    const {authUser} =useAuthContext()
+    const [socket, setsocket] = useState(null);
+    const [onlineUsers, setonlineUsers] = useState([]);
+    const {authUser} =useAuthContext();
 
     useEffect(() => {
         if(authUser){
-            const socket = io("http://localhost:5000",{
+            const socket = io("https://chat-app-by-ma.onrender.com/",{
                 query:{
                     userId:authUser._id,
                 },
